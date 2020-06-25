@@ -23,7 +23,7 @@ int alpha;
 
 ```
 
-Como cada pixel está escrito em memória, é necessário resolver a seguinte operação matemática para localizar a posição na tela, onde p0 é a struct recebida pela função, p0.x linha desejada, p0.y a linha desejada e _IMAGE_WIDTH_ a largura da tela em pixels.:
+Como cada pixel está escrito em memória, é necessário resolver a seguinte operação matemática para localizar a posição na tela, onde p0 é a struct recebida pela função, p0.x linha desejada, p0.y a coluna desejada e _IMAGE_WIDTH_ a largura da tela em pixels.:
 
 ```c
 4 * p0.x + 4 * p0.y * IMAGE_WIDTH + 0
@@ -34,15 +34,15 @@ Como cada pixel está escrito em memória, é necessário resolver a seguinte op
 
 ![Rastering a line](./images/../image/line.png)
 
-Na representação do monitor acima, está desenhada uma linha utilizando algoritmo de _Bresenham_ com um degradé criado a partir da progressão linear da cor de seu pixel inicial e final.
+Na representação do monitor acima, está desenhada uma linha utilizando algoritmo de _Bresenham_ com um degradé criado a partir da progressão linear da cor de seu pixel inicial até o final.
 
-Para implementar a progressão linear, foi obtido a taxa de variação da cor em relação a iteração do algoritmo. Como sabemos os valores iniciais e finais de cada pixel da linha (vermelho, verde, azul e alpha), e a quantidade de iterações necessárias para realizar o algoritmo, basta realizar a seguinte operação:
+Para implementar a progressão linear, foi obtido a taxa de variação da cor em relação a iteração do algoritmo. Como sabemos os valores iniciais e finais de cada pixel da linha (vermelho, verde, azul e alpha) e a quantidade de iterações necessárias para realizar o algoritmo, basta realizar a seguinte operação:
 
 ```C
 int dRed = (p1.red - p0.red) / inc;
 ```
 
-Onde dRed é a taxa de variação do vermelho em relação a iteração do algorítimo, p1.red o valor inicial do vermelho, p0.red o valor inicial do vermelho e inc a quantidade de iterações do algoritmo.
+Onde dRed é a taxa de variação do vermelho em relação a iteração do algorítimo, p1.red o valor inicial do vermelho, p0.red o valor final do vermelho e inc a quantidade de iterações do algoritmo.
 
 ## Atividade 3: Rasterizar um triângulo na tela
 
@@ -52,9 +52,9 @@ Na representação do monitor acima, foi rasterizada um triângulo não preenchi
 
 Com a linha desenhada pelo algoritmo de _Bresenham_ só conseguimos desenhar em um quadrante, então foram necessárias algumas modificações para que consigamos desenhar em todos os quadrantes.
 
-As duas primeiras modificações realizadas foram suficientes para que fosse possível desenhar em quatro dos 8 quadrantes. A primeira foi realizar um swap dos dois vértices de uma aresta, caso o **X** da aresta final seja menor que o da aresta inicial da linha. A segunda alteração adicionar uma variável de iteração para o **Y**, caso este cresça negativamente, a variável irá decrementar, caso contrário ela irá incrementar seu valor durante as iterações do algoritmo de _Bresenham_.
+As duas primeiras modificações realizadas foram suficientes para que tornar possível desenhar em quatro dos 8 quadrantes. A primeira foi realizar um swap dos dois vértices de uma aresta, caso o **X** da aresta final seja menor que o da aresta inicial da linha, mudando o vertice inicial e final da linha. A segunda alteração foi adicionar uma variável de iteração para o **Y**, caso este cresça negativamente, a variável irá decrementar, caso contrário ela irá incrementar seu valor durante as iterações do algoritmo de _Bresenham_.
 
-Porém, estas modificações não foram suficientes para realizar a rasterização da linha em todos os octantes, faltando a metade, que são os octantes complementares aos 4 que é possível rasterizar até então.
+Porém, estas modificações não foram suficientes para realizar a rasterização da linha em todos os octantes, faltando a metade, que são os octantes complementares aos 4 que são possíveis rasterizar até então.
 
 Para conseguir desenhar neles, foi necessário realizar uma inversão das variáveis do algoritmo. Na implementação original, as operações estão dispostas a seguir:
 
@@ -112,4 +112,4 @@ Já a implementação da função com as variáveis invertidas estão dispostas 
    }
 ```
 
-Onde a variável inc_x e inc_y presentes no cálculo do delta de X e de Y respectivamente, estão presentes para manter o valor do delta absoluto. E a função PutPixel() desenha o pixel na tela em memória.
+Onde a variável inc_x e inc_y presentes no cálculo do delta de X e de Y respectivamente, estão presentes para manter o valor do delta absoluto. E a função PutPixel() desenha o pixel na tela em memória. Pode-se perceber comparando ambos os códigos que a inversão se trata basicamente de substituir dx por dy, e vice versa, e inverter a incrementação em X e Y.
