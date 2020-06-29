@@ -4,4 +4,4 @@
 #include <GL/glut.h>
 #include <stdio.h>
 
-#endif  // MAIN_H
+#endif // MAIN_H

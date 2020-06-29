@@ -12,47 +12,53 @@
  ****************************************************************************/
 #include "main.h"
 
-#define IMAGE_WIDTH 512 // Largura da janela OpenGL em pixels.
+#define IMAGE_WIDTH 512  // Largura da janela OpenGL em pixels.
 #define IMAGE_HEIGHT 512 // Altura da janela OpenGL em pixels.
 
 // Array contendo as coordenadas X,Y e Z de tres vertices (um trianglulo).
 float vertices[] = {
     -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
     0.0f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-    0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f}; 
+    0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
 
-char* frag_shader_source = NULL;
-char* vertex_shader_source = NULL;
+char *frag_shader_source = NULL;
+char *vertex_shader_source = NULL;
 unsigned int shader_program;
 unsigned int vbo; // Vertex buffer object ID
 unsigned int vao; // Vertex array object ID
 
 //********************************************************************************************************************
 // A função LoadShader() é baseada em https://stackoverflow.com/a/174552/6107321
-void LoadShader(char* file_name, char** shader_source) {
+void LoadShader(char *file_name, char **shader_source)
+{
     long length;
-    FILE* f = fopen(file_name, "rb");
+    FILE *f = fopen(file_name, "rb");
 
-    if (f) {
+    if (f)
+    {
         fseek(f, 0, SEEK_END);
         length = ftell(f);
         fseek(f, 0, SEEK_SET);
 
-        (*shader_source) = (char*)malloc(length + 1);
-        if ((*shader_source)) {
+        (*shader_source) = (char *)malloc(length + 1);
+        if ((*shader_source))
+        {
             fread((*shader_source), 1, length, f);
             (*shader_source)[length] = '\0';
         }
 
         fclose(f);
-    } else {
+    }
+    else
+    {
         printf("Could not load the shader file %s\nExiting...", file_name);
         exit(EXIT_FAILURE);
     }
 }
 
 //********************************************************************************************************************
-void Display(void) {
+void Display(void)
+{
     // Limpa a tela e o depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -68,19 +74,22 @@ void Display(void) {
     // Desenha as tres primeiras primitivias, comecando pela de indice 0.
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    glFlush();            //
-    glutSwapBuffers();    //
-    glutPostRedisplay();  //
+    glFlush();           //
+    glutSwapBuffers();   //
+    glutPostRedisplay(); //
 }
 
 //********************************************************************************************************************
-void ExitProg(void) {
-    if (vertex_shader_source) {
+void ExitProg(void)
+{
+    if (vertex_shader_source)
+    {
         free(vertex_shader_source);
         vertex_shader_source = NULL;
     }
 
-    if (frag_shader_source) {
+    if (frag_shader_source)
+    {
         free(frag_shader_source);
         frag_shader_source = NULL;
     }
@@ -89,7 +98,8 @@ void ExitProg(void) {
 }
 
 //********************************************************************************************************************
-int main(int argc, char** argv) {
+int main(int argc, char **argv)
+{
     // Inicializa a GLUT
     glutInit(&argc, argv);
 
@@ -128,7 +138,8 @@ int main(int argc, char** argv) {
     char info_log[512];
     glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success);
 
-    if (!success) {
+    if (!success)
+    {
         glGetShaderInfoLog(vertex_shader, 512, NULL, info_log);
         printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", info_log);
     }
@@ -152,7 +163,8 @@ int main(int argc, char** argv) {
     // Imprime eventuais mensagens de erro de compilacao do Fragment Shader
     glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success);
 
-    if (!success) {
+    if (!success)
+    {
         glGetShaderInfoLog(fragment_shader, 512, NULL, info_log);
         printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", info_log);
     }
@@ -164,17 +176,18 @@ int main(int argc, char** argv) {
     glAttachShader(shader_program, vertex_shader);
     glAttachShader(shader_program, fragment_shader);
 
-    // Linka o Fragment e Vertex Shader para formarem o Program Shader 
+    // Linka o Fragment e Vertex Shader para formarem o Program Shader
     glLinkProgram(shader_program);
 
     // Imprime eventuais mensagens de erro de linkagem do Program Shader
     glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
-    if (!success) {
+    if (!success)
+    {
         glGetProgramInfoLog(shader_program, 512, NULL, info_log);
         printf("ERROR::SHADER::PROGRAM::LINKING_FAILED\n%s\n", info_log);
     }
 
-    // Deleta os Fragment e Vertex Shaders, já que eles já foram incorporados 
+    // Deleta os Fragment e Vertex Shaders, já que eles já foram incorporados
     // ao Program Shader e não são mais necessários.
     glDeleteShader(vertex_shader);
     glDeleteShader(fragment_shader);
@@ -182,7 +195,7 @@ int main(int argc, char** argv) {
     // Ativa o Vertex Array Object (VAO)
     glBindVertexArray(vao);
 
-    // Cria um novo identificador de buffer 
+    // Cria um novo identificador de buffer
     glGenBuffers(1, &vbo);
 
     // Vincula o buffer criado a um Vertex Buffer Object (VBO)
@@ -192,17 +205,17 @@ int main(int argc, char** argv) {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     // Atributo 'posição' do vértice
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
     // Atributo 'cor' do vértice
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
     // Define a cor a ser utilizada para limpar o color buffer a cada novo frame
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);            
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-    atexit(ExitProg);          // deifne o callback de saída do programa
-    glutDisplayFunc(Display);  // define o callback que renderizará cada frame
+    atexit(ExitProg);         // deifne o callback de saída do programa
+    glutDisplayFunc(Display); // define o callback que renderizará cada frame
 
     // Framebuffer scan loop.
     glutMainLoop();
