@@ -37,9 +37,11 @@ Ao executar o programa novamente, foi obtido o seguinte resultado:
 
 ![Triângulo rgb](images/rgb.png)
 
+![Triângulo animado](images/animatedTriangle.gif)
+
 ## Conclusão
 
-Com a compilação do progama baseado em OpenGL Moderno realizada com sucesso, o objetivo desta atividade foi alcançado, sendo possível realizar trabalhos utilizando esta tecnologia daqui parafrente.
+Com a compilação do progama baseado em OpenGL Moderno realizada com sucesso, o objetivo desta atividade foi alcançado, sendo possível realizar trabalhos utilizando esta tecnologia de agora em diante.
 
 ## Referências
 
