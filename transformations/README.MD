@@ -1,11 +1,11 @@
 # Curso de introdução a computação gráfica: Transformações
 
 > O objetivo deste trabalho é familiarizar os alunos com a estrutura do pipeline gráfico
-> atravéz da implementação das transformações geométricas que o compõem.
+> através da implementação das transformações geométricas que o compõem.
 
 ## Compilação e Execução do Código
 
-Como o C++ não aceita declarações implicitas, é necessário realizar a instalação do GLEW, que cria as referências para todas as extenções do OpenGl. Para sua instalação, foi seguido o guia de instalação no site do [GLEW](http://glew.sourceforge.net/).
+Como o C++ não aceita declarações implícitas, é necessário realizar a instalação do GLEW, que cria as referências para todas as extensões do OpenGl. Para sua instalação, foi seguido o guia de instalação no site do [GLEW](http://glew.sourceforge.net/).
 
 Após satisfazer todas as dependências, foi compilado o código deste projeto utilizando o MAKE, que tem descrito o seguinte comando:
 
@@ -43,7 +43,7 @@ float model_array[16] = {0.3f, 0.0f, 0.0f, 0.0f,
 
 ### Translação
 
-A segunda transformação realizada foi a translação. A translação é utilizada para mover uma imagem na tela. Ela mantem a mesma escala da imagem, mas mudando sua posição em relação a imagem original no espaço. Veja a seguir os mesmos triângulos demonstrados na primeira imagem mas transladados por um fator de `(x, y, z) = (1, 0, 0)`:
+A segunda transformação realizada foi a translação. A translação é utilizada para mover uma imagem na tela. Ela mantém a mesma escala da imagem, mas mudando sua posição em relação a imagem original no espaço. Veja a seguir os mesmos triângulos demonstrados na primeira imagem mas transladados por um fator de `(x, y, z) = (1, 0, 0)`:
 
 ![Resultado da execução](./images/img4.png)
 
@@ -59,9 +59,9 @@ float model_array[16] = {1.0f, 0.0f, 0.0f, 0.0f,
 
 ```
 
-### Projeção pespectiva
+### Projeção perspectiva
 
-A terceira transformação realizada foi a pespectiva. A pespectiva é utilizada para passar a impressão de profundidade. Ao se distanciar de alguns objetos, eles apresentam comportamentos diferentes de acordo com a posição de cada um do observador, e a pespectiva trata disso.  Veja a seguir a primeira imagem dos dois triângulos com um fator de pespectiva `d = 1/2`, onde d é a distância até o centro da imagem;
+A terceira transformação realizada foi a perspectiva. A perspectiva é utilizada para passar a impressão de profundidade. Ao se distanciar de alguns objetos, eles apresentam comportamentos diferentes de acordo com a posição de cada um do observador, e a perspectiva trata disso.  Veja a seguir a primeira imagem dos dois triângulos com um fator de perspectiva `d = 1/2`, onde d é a distância até o centro da imagem;
 
 ![Resultado da execução](./images/img3.png)
 
@@ -80,7 +80,7 @@ As alterações necessárias no código para se realizar a atividade estão desc
 
 ### Posição da câmera
 
-A quarta transformação realizada foi a posição da câmera. A posição da câmera diz respeito a posição no espaço na qual o objeto está sendo observado. Para isso é necessário levar em consideraçao alguns fatores, pois a posição da câmera diz respeito a sua posição no espaço e seu ângulo de rotação em torno de sí mesmo, além de ser necessário um ponto de referência para se realizar isto.  Portanto, são necessários setar três valores para se realizar a atividade proposta:
+A quarta transformação realizada foi a posição da câmera. A posição da câmera diz respeito a posição no espaço na qual o objeto está sendo observado. Para isso é necessário levar em consideração alguns fatores, pois a posição da câmera diz respeito a sua posição no espaço e seu ângulo de rotação em torno de sí mesmo, além de ser necessário um ponto de referência para se realizar isto.  Portanto, são necessários setar três valores para se realizar a atividade proposta:
 
 ```
 Posição da Câmera = (-1/10, 1/10, 1/4)
@@ -88,7 +88,7 @@ Vetor Up da câmera = (0, 1, 0)
 Ponto que a câmera aponta = (0, 0, 0)
 ```
 
-O seguinte código demonstra o procedimento necessário para se realizar as operações matemáticas descritas durantes as aulas e mensionadas na descrição da atividade para se realizar a atividade:
+O seguinte código demonstra o procedimento necessário para se realizar as operações matemáticas descritas durantes as aulas e mencionadas na descrição da atividade para se realizar a atividade:
 
 ``` cpp
     glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -116,13 +116,13 @@ O seguinte código demonstra o procedimento necessário para se realizar as oper
 
 ### Transformação livre
 
-Esta não se trata de uma transformação, mas de um espaço disponibilizado para documentar mudanças realizadas livremente nas estrutuas de dados utilizadas para manipular os triângulos. Foi realizado então todas as transformações descritas nas seções aneriores. Escala por um fator de `(x, y, z) = (1/3, 3/2, 1)`, translação por um fator de `(x, y, z) = (1, 0, 0)`, pespectiva com um `d = 1/2` e a mudança na posição da câmera. O resultado está demonstrado na imagem a seguir.
+Esta não se trata de uma transformação, mas de um espaço disponibilizado para documentar mudanças realizadas livremente nas estruturas de dados utilizadas para manipular os triângulos. Foi realizado então todas as transformações descritas nas seções anteriores. Escala por um fator de `(x, y, z) = (1/3, 3/2, 1)`, translação por um fator de `(x, y, z) = (1, 0, 0)`, pespectiva com um `d = 1/2` e a mudança na posição da câmera. O resultado está demonstrado na imagem a seguir.
 
 ![Resultado da execução](./images/img6.png)
 
 ## Conclusão
 
-Nesta atividade foram obtidos vários conehcimentos. O primeiro é a cerca das bibliotecas utilizadas na computação gráfica, ao se observar o código disponibilizado pelo professor. O segundo é como as estruturas e cálculos mencionados em sala são utilizados na prática.
+Nesta atividade foram obtidos vários conhecimentos. O primeiro é a cerca das bibliotecas utilizadas na computação gráfica, ao se observar o código disponibilizado pelo professor. O segundo é como as estruturas e cálculos mencionados em sala são utilizados na prática.
 
 ## Referências
 
